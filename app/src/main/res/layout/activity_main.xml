@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="10"
-        android:name="com.ericsospedra.fragmentsgames.modelos.Menu" />
+        android:name="com.ericsospedra.fragmentsgames.modelos.Menu"
+        tools:layout="@layout/fragment_menu" />
 
 </LinearLayout>
