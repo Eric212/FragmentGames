@@ -1,7 +1,3 @@
 <resources>
     <string name="app_name">FragmentsGames</string>
-    <string name="tres_en_raya">Tres en raya</string>
-    <string name="ahorcado">Ahorcado</string>
-    <string name="hundir_la_flota">Hundir la flota</string>
-    <string name="ship">ship</string>
 </resources>
