@@ -1,5 +1,6 @@
 package com.ericsospedra.fragmentsgames.Adaptadores;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,17 +22,17 @@ import java.util.ArrayList;
  * Se encarga tanto de la creacion de los items como de capturar los clicks
  */
 public class AdaptadorMenu extends RecyclerView.Adapter<AdaptadorMenu.GameViewHolder> {
-    private ArrayList<Game> juegos;
-    private IonClickListenner listenner;
+    private final ArrayList<Game> juegos;
+    private final IonClickListenner listener;
 
     /**
      * @author eric
      * @param juegos
-     * @param listenner
+     * @param listener
      */
-    public AdaptadorMenu(ArrayList<Game> juegos, IonClickListenner listenner) {
+    public AdaptadorMenu(ArrayList<Game> juegos, IonClickListenner listener) {
         this.juegos = juegos;
-        this.listenner = listenner;
+        this.listener = listener;
     }
 
     /**
@@ -74,8 +75,8 @@ public class AdaptadorMenu extends RecyclerView.Adapter<AdaptadorMenu.GameViewHo
      *Esta es nuesta clase ViewHolder personalizada para este escenario
      */
     public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView nombre;
-        private ImageView icono;
+        private final TextView nombre;
+        private final ImageView icono;
 
         /**
          * @param itemView
@@ -92,9 +93,11 @@ public class AdaptadorMenu extends RecyclerView.Adapter<AdaptadorMenu.GameViewHo
          * Aqui accedemos a los datos del item que nos devuelve el adaptador al
          * recorrer la lista y seteamos los el nombre y el icono
          */
+        @SuppressLint("DiscouragedApi")
         public void onBindGame(Game juego) {
             nombre.setText(juego.getNombre());
             icono.setImageResource(itemView.getContext().getResources().getIdentifier(juego.getIcono(),"drawable",itemView.getContext().getPackageName()));
+            itemView.setOnClickListener(this);
         }
 
         /**
@@ -104,8 +107,8 @@ public class AdaptadorMenu extends RecyclerView.Adapter<AdaptadorMenu.GameViewHo
          */
         @Override
         public void onClick(View v) {
-            if(listenner!=null){
-                listenner.onClick(getAdapterPosition());
+            if(listener !=null){
+                listener.onClick(getAdapterPosition());
             }
         }
     }
