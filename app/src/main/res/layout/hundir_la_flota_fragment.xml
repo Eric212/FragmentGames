@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcvDisparo"
+            android:name="com.ericsospedra.fragmentsgames.modelos.hundirlaflota.fragments.ListaBarcosFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            tools:layout="@layout/lista_barcos" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcvPuntuacion"
+            android:name="com.ericsospedra.fragmentsgames.modelos.hundirlaflota.fragments.PuntuacionFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="40" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcvPosicion"
+            android:name="com.ericsospedra.fragmentsgames.modelos.hundirlaflota.fragments.TableroPosicionarFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="25" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

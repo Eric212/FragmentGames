@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship4x3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_1_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/shio4x2"
+        app:layout_constraintTop_toBottomOf="@+id/ship_2_3x3" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship4x1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_0_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ship_2_3x1" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship4x4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/battleship_3_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ship4x3"
+        app:layout_constraintTop_toBottomOf="@+id/ship_2_3x3" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/shio4x2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_1_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ship4x1"
+        app:layout_constraintTop_toBottomOf="@+id/ship_2_3x2" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_2_2x1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_0_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ship_2_3x3"
+        app:layout_constraintTop_toBottomOf="@+id/ship_1_2x1" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_2_2x2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/ship_2_2x1"
+        app:layout_constraintTop_toBottomOf="@+id/ship_1_2x2"
+        app:srcCompat="@drawable/battleship_3_horizontal" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_2_3x1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_0_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ship_1_3x1" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_2_3x2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_1_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ship_2_3x1"
+        app:layout_constraintTop_toBottomOf="@+id/ship_1_3x2" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_2_3x3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/battleship_3_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ship_2_3x2"
+        app:layout_constraintTop_toBottomOf="@+id/ship_1_3x3" />
+
+    <ImageButton
+        android:id="@+id/ship_1_3x1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:contentDescription="@string/ship"
+        android:src="@drawable/battleship_0_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_1_3x2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_1_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ship_1_3x1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_1_3x3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/battleship_3_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ship_1_3x2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_1_2x1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_0_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ship_1_3x3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_1_2x2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/ship_1_2x1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/battleship_3_horizontal" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_3_2x2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ship_3_2x1"
+        app:layout_constraintTop_toBottomOf="@+id/ship_2_2x2"
+        app:srcCompat="@drawable/battleship_3_horizontal" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship_3_2x1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_0_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ship4x4"
+        app:layout_constraintTop_toBottomOf="@+id/ship_2_2x1" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship5x1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ship4x1"
+        app:srcCompat="@drawable/battleship_0_horizontal" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship5x5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/battleship_3_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ship5x4"
+        app:layout_constraintTop_toBottomOf="@+id/ship_3_2x1" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship5x3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_1_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ship5x2"
+        app:layout_constraintTop_toBottomOf="@+id/ship4x3" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship5x4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_1_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ship5x3"
+        app:layout_constraintTop_toBottomOf="@+id/ship4x4" />
+
+    <ImageButton
+        android:contentDescription="@string/ship"
+        android:id="@+id/ship5x2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/white"
+        android:src="@drawable/battleship_1_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ship5x1"
+        app:layout_constraintTop_toBottomOf="@+id/shio4x2" />
+
+    <Button
+        android:id="@+id/bOrientation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#00FFFFFF"
+        app:icon="@android:drawable/ic_popup_sync"
+        app:iconGravity="textTop"
+        app:iconPadding="0dp"
+        app:iconSize="64dp"
+        app:iconTint="#5CADEA"
+        app:layout_constraintBottom_toTopOf="@+id/ship_3_2x2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ship_1_2x2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
