@@ -86,6 +86,7 @@ public class AdaptadorMenu extends RecyclerView.Adapter<AdaptadorMenu.GameViewHo
             super(itemView);
             this.nombre = itemView.findViewById(R.id.tvJuegoTresEnRaya);
             this.icono = itemView.findViewById(R.id.ivImagen);
+            itemView.setOnClickListener(this);
         }
 
         /**
