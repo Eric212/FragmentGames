@@ -1,8 +1,6 @@
 package com.ericsospedra.fragmentsgames.modelos.ahorcado;
 
 
-import android.widget.ImageView;
-
 import com.ericsospedra.fragmentsgames.modelos.Game;
 
 /**
@@ -11,12 +9,12 @@ import com.ericsospedra.fragmentsgames.modelos.Game;
  * ya que extiende de Game
  */
 //TODO: Implementar
-public class Ahoracdo extends Game {
+public class Ahorcado extends Game {
     /**
      * @param nombre
      * @param icono
      */
-    public Ahoracdo(String nombre,String icono) {
+    public Ahorcado(String nombre, String icono) {
         super(nombre,icono);
     }
 }

@@ -5,7 +5,6 @@
     android:layout_height="wrap_content">
 
     <ImageButton
-        android:contentDescription="@string/ship"
         android:id="@+id/ship4x3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

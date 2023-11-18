@@ -12,10 +12,12 @@ import android.widget.Toast;
 import com.ericsospedra.fragmentsgames.Interfaces.IonClickListenner;
 import com.ericsospedra.fragmentsgames.modelos.Game;
 import com.ericsospedra.fragmentsgames.modelos.Menu;
-import com.ericsospedra.fragmentsgames.modelos.ahorcado.Ahoracdo;
+import com.ericsospedra.fragmentsgames.modelos.ahorcado.Ahorcado;
 import com.ericsospedra.fragmentsgames.modelos.hundirlaflota.HundirLaFlota;
 import com.ericsospedra.fragmentsgames.modelos.hundirlaflota.fragments.HundirLaFlotaFragment;
 import com.ericsospedra.fragmentsgames.modelos.tresenraya.TresEnRaya;
+import com.ericsospedra.fragmentsgames.modelos.tresenraya.fragments.FragmentInicioTresEnRaya;
+import com.ericsospedra.fragmentsgames.modelos.tresenraya.fragments.FragmentJuegoTresEnRaya;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
             Toast.makeText(this, "Ahorcado", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.action_tresenraya) {
             Toast.makeText(this, "Tres en raya", Toast.LENGTH_SHORT).show();
-
+            manager.beginTransaction().replace(R.id.fcvMenu, FragmentInicioTresEnRaya.class, null).commit();
         } else {
             Toast.makeText(this, "Hundir la flota", Toast.LENGTH_SHORT).show();
         }
@@ -97,10 +99,10 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
     @Override
     public ArrayList<Game> getJuegos() {
         this.juegos = new ArrayList<>();
-        Ahoracdo ahoracdo = new Ahoracdo(Juegos.AHORCADO.toString(), Juegos.AHORCADO.toString().replace(" ", "").toLowerCase());
+        Ahorcado ahorcado = new Ahorcado(Juegos.AHORCADO.toString(), Juegos.AHORCADO.toString().replace(" ", "").toLowerCase());
         TresEnRaya tresEnRaya = new TresEnRaya(Juegos.TRESENRAYA.toString(), Juegos.TRESENRAYA.toString().replace(" ", "").toLowerCase());
         HundirLaFlota hundirLaFlota = new HundirLaFlota(Juegos.HUNDIRLAFLOTA.toString(), Juegos.HUNDIRLAFLOTA.toString().replace(" ", "").toLowerCase());
-        juegos.add(ahoracdo);
+        juegos.add(ahorcado);
         juegos.add(tresEnRaya);
         juegos.add(hundirLaFlota);
         return juegos;
