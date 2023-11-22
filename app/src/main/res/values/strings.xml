@@ -2,4 +2,8 @@
     <string name="app_name">FragmentsGames</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ship">ship\n</string>
+    <string name="tres_en_raya">Tres en raya</string>
+    <string name="ahorcado">Ahorcado</string>
+    <string name="hundir_la_flota">Hundir la flota</string>
 </resources>
