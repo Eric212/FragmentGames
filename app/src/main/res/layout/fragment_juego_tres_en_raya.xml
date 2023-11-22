@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvGanaO"
+        android:id="@+id/tvPuntuacionO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTurno" />
 
     <TextView
-        android:id="@+id/tvGanaX"
+        android:id="@+id/tvPuntuacionX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -55,13 +55,16 @@
         android:animateLayoutChanges="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGanaO"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvPuntuacionO">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
-        android:id="@+id/btJugarTresEnRaya"
+        android:id="@+id/bReiniciar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:backgroundTint="#FFFEC00D"
         android:text="REINICIAR"
         android:textColor="#090505"
@@ -71,5 +74,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvTableroTresEnRaya" />
+
+    <ImageView
+        android:id="@+id/ivJugadaTresEnRaya"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPuntuacionO" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -24,6 +24,8 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements Menu.IonAttach, IonClickListenner {
     private ArrayList<Game> juegos;
+    private Toolbar toolbar;
+
 
     /**
      * @author eric
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.tbMenu);
+        toolbar = findViewById(R.id.tbMenu);
         setSupportActionBar(toolbar);
         manager = getSupportFragmentManager();
     }
@@ -116,7 +118,8 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
                 invalidateOptionsMenu();
                 break;
             case "tresenraya":
-                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMenu, Menu.class, null).commit();
+                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMenu, FragmentInicioTresEnRaya.class, null).commit();
+                toolbar.setTitle("Tres En Raya");
                 invalidateOptionsMenu();
                 break;
             case "hundirlaflota":
