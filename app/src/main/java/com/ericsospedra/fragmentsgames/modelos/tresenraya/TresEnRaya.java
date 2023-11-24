@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ericsospedra.fragmentsgames.R;
 import com.ericsospedra.fragmentsgames.modelos.Game;
+import com.ericsospedra.fragmentsgames.modelos.tresenraya.fragments.FragmentJuegoTresEnRaya;
 
 /**
  * @author eric
@@ -15,15 +16,15 @@ import com.ericsospedra.fragmentsgames.modelos.Game;
  * ya que extiende de Game
  */
 //TODO: Implementar
-public class TresEnRaya extends Game {
+public class TresEnRaya extends Game  {
     /**
      * @param nombre
      * @param icono
      */
    private FrameLayout fl;
+   private int numJugadores;
+   public static int puntuacionX = 0, puntuacionO = 0;
     public TresEnRaya(String nombre, String icono) {
         super(nombre,icono);
     }
-
-   // fl = findViewById(R.id.fragment_juego_tres_en_raya);
 }

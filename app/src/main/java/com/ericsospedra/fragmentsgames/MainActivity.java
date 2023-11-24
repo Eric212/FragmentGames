@@ -22,9 +22,10 @@ import com.ericsospedra.fragmentsgames.modelos.tresenraya.fragments.FragmentJueg
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements Menu.IonAttach, IonClickListenner {
+public class MainActivity extends AppCompatActivity implements Menu.IonAttach, IonClickListenner, FragmentJuegoTresEnRaya.IOnAttachListener {
     private ArrayList<Game> juegos;
     private Toolbar toolbar;
+    private int numJugadoresTresEnRaya;
 
 
     /**
@@ -127,5 +128,10 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
                 invalidateOptionsMenu();
                 break;
         }
+    }
+
+    @Override
+    public int getNumJugadoresTresEnRaya() {
+        return numJugadoresTresEnRaya;
     }
 }
