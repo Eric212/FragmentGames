@@ -38,11 +38,11 @@ public class FragmentInicioTresEnRaya extends Fragment implements FragmentJuegoT
                 if (rbUnJugador.isChecked()) {
                     // Iniciar juego para 1 jugador
                     numJugadoresTresEnRaya = 1;
-                    iniciarJuego(1);
+                    iniciarJuego();
                 } else if (rbDosJugadores.isChecked()) {
                     // Iniciar juego para 2 jugadores
                     numJugadoresTresEnRaya = 2;
-                    iniciarJuego(2);
+                    iniciarJuego();
                 } else {
                     // Mostrar un Toast indicando que se debe seleccionar una opción
                     Toast.makeText(getContext(), "Elige una opción de jugadores", Toast.LENGTH_SHORT).show();
@@ -52,21 +52,13 @@ public class FragmentInicioTresEnRaya extends Fragment implements FragmentJuegoT
         return view;
     }
 
-    private void iniciarJuego(int numJugadores) {
+    private void iniciarJuego() {
         //cuando desde home pulsemos el botón jugar, los jugadores comenzarán con puntuación 0
         TresEnRaya.puntuacionO = 0;
         TresEnRaya.puntuacionX = 0;
 
         rbUnJugador.setChecked(false);
         rbDosJugadores.setChecked(false);
-
-        // Crear un Bundle para pasar datos al nuevo fragmento
-        Bundle bundle = new Bundle();
-        bundle.putInt("numeroJugadores", numJugadores);
-
-        // Crear una instancia del FragmentJuegoTresEnRaya y establecer el Bundle
-        FragmentJuegoTresEnRaya fragmentJuego = new FragmentJuegoTresEnRaya();
-        fragmentJuego.setArguments(bundle);
 
         // Realizar la transacción del fragmento
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
