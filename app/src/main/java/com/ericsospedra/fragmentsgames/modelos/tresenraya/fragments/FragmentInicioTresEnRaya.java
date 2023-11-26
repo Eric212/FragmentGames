@@ -63,11 +63,6 @@ public class FragmentInicioTresEnRaya extends Fragment {
         FragmentJuegoTresEnRaya fragmentJuegoTresEnRaya = new FragmentJuegoTresEnRaya();
         fragmentJuegoTresEnRaya.setNumJugadores(numJugadoresTresEnRaya);
 
-
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fcvMenu, fragmentJuegoTresEnRaya, FragmentJuegoTresEnRaya.TAG)
-                .addToBackStack(null)
-                .commit();
         // Realizar la transacción del fragmento
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(FragmentJuegoTresEnRaya.TAG);

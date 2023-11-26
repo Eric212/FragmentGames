@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -90,7 +91,10 @@ public class FragmentJuegoTresEnRaya extends Fragment {
             @Override
             public void onClick(View v) {
                 reiniciarJuegoTresEnRaya();
-                requireActivity().getSupportFragmentManager().popBackStack();
+                // Realizar la transacción del fragmento
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.addToBackStack(FragmentJuegoTresEnRaya.TAG);
+                transaction.replace(R.id.fcvMenu, FragmentInicioTresEnRaya.class, null).commit();
             }
         });
         return view;
