@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -71,6 +72,13 @@ public class FragmentInicioTresEnRaya extends Fragment {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(FragmentJuegoTresEnRaya.TAG);
         transaction.replace(R.id.fcvMenu, FragmentJuegoTresEnRaya.class, null).commit();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Restablece el título de la Toolbar a "Mini juegos" cuando el fragmento se destruye u oculta
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Mini juegos");
     }
 
 }
