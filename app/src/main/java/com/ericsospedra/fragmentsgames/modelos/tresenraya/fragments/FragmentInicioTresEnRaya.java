@@ -1,6 +1,5 @@
 package com.ericsospedra.fragmentsgames.modelos.tresenraya.fragments;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +14,14 @@ import androidx.fragment.app.FragmentTransaction;
 import com.ericsospedra.fragmentsgames.R;
 import com.ericsospedra.fragmentsgames.modelos.tresenraya.TresEnRaya;
 
+
 //Aquí crearemos el fragment para la pantalla de inicio del juego
-public class FragmentInicioTresEnRaya extends Fragment {
+public class FragmentInicioTresEnRaya extends Fragment implements FragmentJuegoTresEnRaya.IOnAttachListener {
 
     private Button bJugar;
     RadioButton rbUnJugador;
     RadioButton rbDosJugadores;
-    private int numJugadores;
-    public static boolean turnoO; //esta variable servirá para determinar el turno de cada jugador
+    private int numJugadoresTresEnRaya;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,14 +37,12 @@ public class FragmentInicioTresEnRaya extends Fragment {
                 // Verificar qué opción se seleccionó
                 if (rbUnJugador.isChecked()) {
                     // Iniciar juego para 1 jugador
-                    numJugadores = 1;
-                    Toast.makeText(getContext(), "rb jugador 1 pulsado" + numJugadores, Toast.LENGTH_SHORT).show();
-                    iniciarJuego();
+                    numJugadoresTresEnRaya = 1;
+                    iniciarJuego(1);
                 } else if (rbDosJugadores.isChecked()) {
                     // Iniciar juego para 2 jugadores
-                    numJugadores = 2;
-                    Toast.makeText(getContext(), "rb jugador 2 pulsado" + numJugadores, Toast.LENGTH_SHORT).show();
-                    iniciarJuego();
+                    numJugadoresTresEnRaya = 2;
+                    iniciarJuego(2);
                 } else {
                     // Mostrar un Toast indicando que se debe seleccionar una opción
                     Toast.makeText(getContext(), "Elige una opción de jugadores", Toast.LENGTH_SHORT).show();
@@ -55,23 +52,30 @@ public class FragmentInicioTresEnRaya extends Fragment {
         return view;
     }
 
-    private void iniciarJuego() {
+    private void iniciarJuego(int numJugadores) {
         //cuando desde home pulsemos el botón jugar, los jugadores comenzarán con puntuación 0
         TresEnRaya.puntuacionO = 0;
         TresEnRaya.puntuacionX = 0;
 
-        FragmentJuegoTresEnRaya fragmentJuegoTresEnRaya = new FragmentJuegoTresEnRaya();
-        fragmentJuegoTresEnRaya.setNumJugadores(numJugadores);
+        rbUnJugador.setChecked(false);
+        rbDosJugadores.setChecked(false);
 
+        // Crear un Bundle para pasar datos al nuevo fragmento
+        Bundle bundle = new Bundle();
+        bundle.putInt("numeroJugadores", numJugadores);
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fcvMenu, fragmentJuegoTresEnRaya, FragmentJuegoTresEnRaya.TAG)
-                .addToBackStack(null)
-                .commit();
+        // Crear una instancia del FragmentJuegoTresEnRaya y establecer el Bundle
+        FragmentJuegoTresEnRaya fragmentJuego = new FragmentJuegoTresEnRaya();
+        fragmentJuego.setArguments(bundle);
+
         // Realizar la transacción del fragmento
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(FragmentJuegoTresEnRaya.TAG);
         transaction.replace(R.id.fcvMenu, FragmentJuegoTresEnRaya.class, null).commit();
     }
 
+    @Override
+    public int getNumJugadoresTresEnRaya() {
+        return numJugadoresTresEnRaya;
+    }
 }
