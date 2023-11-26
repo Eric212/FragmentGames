@@ -22,7 +22,7 @@ import com.ericsospedra.fragmentsgames.modelos.tresenraya.fragments.FragmentJueg
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements Menu.IonAttach, IonClickListenner, FragmentJuegoTresEnRaya.IOnAttachListener {
+public class MainActivity extends AppCompatActivity implements Menu.IonAttach, IonClickListenner {
     private ArrayList<Game> juegos;
     private Toolbar toolbar;
     private int numJugadoresTresEnRaya;
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.tbMenu);
+        toolbar.setTitle("Mini juegos");
         setSupportActionBar(toolbar);
         manager = getSupportFragmentManager();
     }
@@ -90,11 +91,14 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
         int itemId = item.getItemId();
         if (itemId == R.id.action_ahorcado) {
             Toast.makeText(this, "Ahorcado", Toast.LENGTH_SHORT).show();
+            toolbar.setTitle("Ahorcado");
         } else if (itemId == R.id.action_tresenraya) {
             Toast.makeText(this, "Tres en raya", Toast.LENGTH_SHORT).show();
+            toolbar.setTitle("Tres En Raya");
             manager.beginTransaction().replace(R.id.fcvMenu, FragmentInicioTresEnRaya.class, null).commit();
         } else {
             Toast.makeText(this, "Hundir la flota", Toast.LENGTH_SHORT).show();
+            toolbar.setTitle("Hundir la flota");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -128,10 +132,5 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
                 invalidateOptionsMenu();
                 break;
         }
-    }
-
-    @Override
-    public int getNumJugadoresTresEnRaya() {
-        return numJugadoresTresEnRaya;
     }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,20 +20,29 @@ import com.ericsospedra.fragmentsgames.modelos.tresenraya.fragments.FragmentJueg
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AdaptadorTableroTresEnRaya extends RecyclerView.Adapter<AdaptadorTableroTresEnRaya.ViewHolder>{
+
     private Context context; //Representa el contexto de la aplicación Android.
-    private List<Bitmap> arrBmCeldas, arrJugadas; //lista que contiene objetos Bitmap que representan las imágenes de las celdas del tablero del juego. Creamos un arreglo de imágenes para guardar por un lado las celdas (que se pasan al adaptador desde la clase FragmentJuego, como las líneas (fotos con líneas en negro) que indicarán quién gana al finalizar la partida
+    public List<Bitmap> arrBmCeldas;
+    private List<Bitmap> arrJugadas; //lista que contiene objetos Bitmap que representan las imágenes de las celdas del tablero del juego. Creamos un arreglo de imágenes para guardar por un lado las celdas (que se pasan al adaptador desde la clase FragmentJuego, como las líneas (fotos con líneas en negro) que indicarán quién gana al finalizar la partida
     private Bitmap bmX, bmO, empate; //creamos dos objetos Bitmap para insertar las imágenes de las tiradas X e O, que son 2 fotos que están en drawable. Serán objetos Bitmap que representan las imágenes de las tiradas X e O, respectivamente.
     private Animation animationXyO, animationJugada, animationGanador; //Son objetos de la clase Animation que representan las animaciones que se aplicarán a las imágenes de las tiradas y las líneas. .Aquí guardamos un efecto creado en un archivo xml en la carpeta anim, un efecto para las líneas que aparecen y también para cuando pulsamos para jugar con X u O, para que cuando se interactúa con el juego, al pulsar en la pantalla, los elementos que aparecen tengan un efecto como de ir construyéndose poco a poco, desde una transparencia hasta opaco, es más amable la aparición de los elementos.
-    private String simboloGanador = "O";
     private int numJugadores;
+    boolean isTurnoO;
+    private String simboloGanador = "O";
+    int adapterPosition;
+
+
+
     //CONSTRUCTOR DEL ADAPTADOR, le pasamos por parámetro el contexto y el arreglo de elementos necesarios para crear el diseño
     //A parte tendrá otros elementos necesarios para la creación total del diseño, como son los definidos en las variables de esta clase.
-    public AdaptadorTableroTresEnRaya(Context context, List<Bitmap> arrBmCeldas, int numJugadores) {
+    public AdaptadorTableroTresEnRaya(Context context, List<Bitmap> arrBmCeldas, int numJugadores, boolean isTurnoO) {
         this.context = context;
         this.arrBmCeldas = arrBmCeldas;
         this.numJugadores = numJugadores;
+        this.isTurnoO = isTurnoO;
         bmO = BitmapFactory.decodeResource(context.getResources(), R.drawable.circulo); //Guardamos en el BitmapO la imagen del círculo
         bmX = BitmapFactory.decodeResource(context.getResources(), R.drawable.x); //Guardamos en el objeto BitmapX la imagen de la X
         empate = BitmapFactory.decodeResource(context.getResources(), R.drawable.empate);
@@ -48,6 +58,12 @@ public class AdaptadorTableroTresEnRaya extends RecyclerView.Adapter<AdaptadorTa
         animationJugada = AnimationUtils.loadAnimation(context, R.anim.anim_jugada); //esto será la animación para las líneas, que aparecen al finalizar la partida indicando el usuario ganador
         animationGanador = AnimationUtils.loadAnimation(context, R.anim.anim_ganador);
         FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setAnimation(animationJugada); //estas imágenes de las líneas se insertan en el contenedor (una imagen insertada en el fragmento del juego, con las mismas dimensiones que el recyclerview), que hemos llamado ivJugadaTresEnRaya
+        // Llamamos a jugadaIA al comienzo del juego si el turno inicial es de X y se eligió 1 jugador (le tocaría a la CPU)
+        if (!isTurnoO && numJugadores == 1) {
+            Toast.makeText(context.getApplicationContext(), "entró en adaptador", Toast.LENGTH_SHORT).show();
+            jugadaIA();
+            notifyDataSetChanged();
+        }
     }
 
     /*
@@ -74,127 +90,190 @@ public class AdaptadorTableroTresEnRaya extends RecyclerView.Adapter<AdaptadorTa
     En este métodos se utiliza el ViewHolder para actualizar el contenido de las vistas dentro de ese elemento de la cuadrícula.
     A cada celda de la cuadrícula se le asignará la imagen correspondiente, según el turno (x o Y) y según la posición
     se asignará en un lugar determinado de la cuadrícula.
-    Este método se llama cuando se necesita mostrar o actualizar un elemento (celda) en una posición específica de la cuadrícula.
-    Aquí, holder hace referencia al ViewHolder asociado a esa posición, y se actualiza la imagen en ivCeldaTablero con
-    la imagen correspondiente desde arrBmCeldas.
     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int adapterPosition = holder.getAdapterPosition(); //obtiene el Bitmap (celda concreta de las 9) correspondiente a la posición actual del adaptador, es decir, devuelve la posición del ítem (la celda/mini cuadrícula) actual en la lista de datos del adaptador (en este caso el adaptador muestra las 9 celdas guardadas en arrBmCeldas, y al pulsar sobre una, nos devuelve la posición de esa celda pulsada). Así, se utiliza esa posición para obtener el bitmap (espacio para la imagen) correspondiente de arrBmCeldas y establecerlo como contenedor de la imagen que contendrá X u O
+        adapterPosition = holder.getAdapterPosition(); //obtiene el Bitmap (celda concreta de las 9) correspondiente a la posición actual del adaptador, es decir, devuelve la posición del ítem (la celda/mini cuadrícula) actual en la lista de datos del adaptador (en este caso el adaptador muestra las 9 celdas guardadas en arrBmCeldas, y al pulsar sobre una, nos devuelve la posición de esa celda pulsada). Así, se utiliza esa posición para obtener el bitmap (espacio para la imagen) correspondiente de arrBmCeldas y establecerlo como contenedor de la imagen que contendrá X u O
         holder.ivCeldaTablero.setImageBitmap(arrBmCeldas.get(adapterPosition));//holder.ivCeldaTablero es la ImageView contenida en la vista de la celda. Es decir, cada celda de las 9 del tablero tiene su propia ImageView. Esta línea de código, coloca la imagen almacenada en arrBmCeldas en la celda del tablero actual representada por holder.ivCeldaTablero.
         animationXyO = AnimationUtils.loadAnimation(context, R.anim.anim_o_x); //insertamos el diseño de la animación a la variable donde se guarda
-        holder.ivCeldaTablero.setAnimation(animationXyO); //asignamos la animación para que aparezca al pulsar en el contenedor de las celdas al insertar las imágenes X y O
-
+        holder.ivCeldaTablero.setAnimation(animationXyO); //asignamos la animación para que aparezca al pulsar en el contenedor de las celdas al insertar las imágenes X y O. Cada tirada se le asignará animación a la imagen X y O que se inserte
         /*
         Método onClick
         Cuando se pulsa sobre el elemento cuadrícula, en una posición concreta,
-        que es la vista creada por el ViewHolder mostrando y apuntando a los elementos del RecyclerView, en este caso la cuadrícula con celdas.
-
-        Cuando pulsemos en una de las celdas de la cuadrícula (que es pulsar en un lugar concreto de
-        la vista del diseño creado por el ViewHolder)
-        La traza del método onClick sería:  cada vez que el usuario hace clic en una celda,
-        se realiza una jugada, se verifica si hay un ganador, se actualiza la interfaz de usuario (insertando una nueva imagen)
-        y se notifica al adaptador que la celda en cuestión ha cambiado para que se vuelva a dibujar.
+        se insertará la imagen de la jugada X u O
          */
         holder.ivCeldaTablero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //si la celda está vacia y aún no hay todavía un ganador (comprobarGanador no es true) se podrá jugar
-                if(arrBmCeldas.get(adapterPosition) == null && !comprobarGanador()) { //si no se cumple alguna de estas condiciones, es decir, si comprobarGanador() es true (ya hay ganador) y/o ninguna posición es null, porque se han completado las jugadas, ya no se permiten más jugadas y finaliza el juego
-                    if(FragmentJuegoTresEnRaya.turnoO) { //si el turno es del jugadorO (estará en true)
-                        arrBmCeldas.set(adapterPosition, bmO); //donde pulse se insertará la imagen de la O
-                        FragmentJuegoTresEnRaya.turnoO = false; //pondremos a false su turno para que le toque al jugador X
-                        FragmentJuegoTresEnRaya.tvTurno.setText("Turno de X"); //insertamos en el textView el turno del otro jugador
-                    }else { //si el turnoO es false, es que le toca al turnoX
-                        arrBmCeldas.set(adapterPosition, bmX); //en la celda pulsada se insertará la foto con la X
-                        FragmentJuegoTresEnRaya.turnoO = true;
-                        FragmentJuegoTresEnRaya.tvTurno.setText("Turno de O");
-                    }
-                    holder.ivCeldaTablero.setAnimation(animationXyO); //cada tirada se le asignará animación a la imagen X y O que se inserte
-                    if (comprobarGanador()) {  //comprobamos si tras completar la jugada existe un ganador, si es true es que sí y entra en el if
-                        gana(); //si hay ganador se ejecutará este método, dándole animación a la línea que señala la jugada ganadora
-                    }
+                    adapterPosition = holder.getAdapterPosition();
+                    jugar();
                     notifyItemChanged(adapterPosition); //se notifica al adaptador que la celda en cuestión ha cambiado para que se vuelva a dibujar, es decir, actualizar visualmente la celda en la pantalla con los nuevos datos proporcionados por el adaptador.
-                   /*
-                   Que se vuelva a dibujar significa que, cuando un usuario realiza una jugada,
-                   el contenido del RecyclerView se actualiza para reflejar el cambio en el tablero de juego.
-                   Las celdas en el tablero pueden cambiar según las interacciones del usuario.
-                   Cada celda puede contener diferentes imágenes (representando X, O o ninguna) y
-                   estas imágenes pueden cambiar durante el juego.
-                   Cuando se notifica al adaptador que una celda en particular ha cambiado mediante
-                   notifyItemChanged(adapterPosition), significa que se le está diciendo al RecyclerView que
-                   vuelva a dibujar esa celda específica, y actualice la vista de la celda en la posición proporcionada.
-                   El adaptador invocará los métodos necesarios, como onBindViewHolder, para actualizar la vista
-                   con la información más reciente de la celda.
-                    */
-                }
             }
         });
-        if(!comprobarGanador()) {
-            comprobarEmpate();
+
+    }
+
+    public void jugar() {
+        if (arrBmCeldas.get(adapterPosition) == null && !comprobarGanador()) { //O
+            if (isTurnoO) {
+                arrBmCeldas.set(adapterPosition, bmO); //en la posición de la celda = adapterPosition (donde pulso) pon bmO sustituyendo la imagen en blanco que es null por bmO
+                isTurnoO = false;
+                FragmentJuegoTresEnRaya.tvTurno.setText("Turno de X");
+                notifyItemChanged(adapterPosition);
+
+                // Si es 1 jugador, después de que el jugador hace su jugada, realiza la jugada de la IA
+                if (numJugadores == 1) {
+                    jugadaIA();
+                }
+            } else { //X
+                if (numJugadores == 1) {
+                    jugadaIA();
+                }else {
+                    arrBmCeldas.set(adapterPosition, bmX);
+                    isTurnoO = true;
+                    FragmentJuegoTresEnRaya.tvTurno.setText("Turno de O");
+                }
+            }
+
+            if (!comprobarGanador()) {
+                comprobarEmpate();
+            } else {
+                gana();
+            }
         }
     }
 
-    public void juegoDosJugadores() {
-
-    }
-
-    private void juegoUnJugadorConIA() {
-        /*
-        Lógica para la inteligencia artificial
-        Aquí debemos determinar la posición en la que la IA realizará su jugada
-        Podemos usar algún algoritmo para hacerlo
-         */
-     //   int posicionIA = determinarPosicionIA();
-
-        // Realizar la jugada de la IA
-       // arrBmCeldas.set(posicionAI, bmX);
-
-        // Notificar al adaptador que la celda en la que la IA jugó ha cambiado
-        //notifyItemChanged(posicionAI);
-
-        // Verificar si la IA ganó después de su jugada
-        if (comprobarGanador()) {
-            gana();
+    private void jugadaIA() {
+        Toast.makeText(context.getApplicationContext(), "Entró en jugadaIA", Toast.LENGTH_SHORT).show();
+        // Lógica de la IA para decidir dónde colocar bmX
+        int celdaElegidaIA = obtenerCeldaTiradaIA();
+        Toast.makeText(context.getApplicationContext(), "celdaTiradaIA " + celdaElegidaIA, Toast.LENGTH_SHORT).show();
+        if (celdaElegidaIA == -1) { //fin partida porque no hay celdas libres
+        }else {
+            // Realizar la jugada de la IA
+            arrBmCeldas.set(celdaElegidaIA, bmX);
+            notifyItemChanged(celdaElegidaIA);
+            // Cambia el turno
+            isTurnoO = true;
+            FragmentJuegoTresEnRaya.tvTurno.setText("Turno de O");
+            notifyDataSetChanged(); //actualizamos interfaz de usuario
         }
     }
 
+    //este método buscará entre las 9 celdas aquellas quqe estén vacías, y de esas elegirá 1 al azar donde poner su tirada
+    private int obtenerCeldaTiradaIA() {
+        Toast.makeText(context.getApplicationContext(), "entró en obtenerCeldaIA", Toast.LENGTH_SHORT).show();
+        // Buscamos una celda vacía de manera aleatoria:
+        List<Integer> celdasVacias = obtenerCeldasVacias();
+        if (!celdasVacias.isEmpty()) {
+            Random random = new Random();
+            return celdasVacias.get(random.nextInt(celdasVacias.size())); //de las posiciones vacías devolvemos una al azar
+        }
+        // Si no hay celdas vacías, devolvemos -1 y significará que la partida finaliza
+        return -1;
+    }
+
+    //con este método obtendremos el total de celdas vacías donde podrá tirar la IA
+    private List<Integer> obtenerCeldasVacias() {
+        List<Integer> celdasVacias = new ArrayList<>();
+        for (int i = 0; i < arrBmCeldas.size(); i++) {
+            if (arrBmCeldas.get(i) == null) { //si en las 9 celdas alguna no tiene foto X u O insertada se añadirá a celdasVacias
+                celdasVacias.add(i);
+            }
+        }
+        return celdasVacias;
+    }
+
+    private boolean comprobarGanador() {
+        if (arrBmCeldas.get(0) == arrBmCeldas.get(3) && arrBmCeldas.get(3) == arrBmCeldas.get(6) && arrBmCeldas.get(0) != null) {
+            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(2));
+            comprobarSimboloGanador(0);
+            return true;
+        } else if (arrBmCeldas.get(1) == arrBmCeldas.get(4) && arrBmCeldas.get(4) == arrBmCeldas.get(7) && arrBmCeldas.get(1) != null) {
+            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(3));
+            comprobarSimboloGanador(1);
+            return true;
+        } else if (arrBmCeldas.get(2) == arrBmCeldas.get(5) && arrBmCeldas.get(5) == arrBmCeldas.get(8) && arrBmCeldas.get(2) != null) {
+            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(4));
+            comprobarSimboloGanador(2);
+            return true;
+        } else if (arrBmCeldas.get(0) == arrBmCeldas.get(1) && arrBmCeldas.get(1) == arrBmCeldas.get(2) && arrBmCeldas.get(0) != null) {
+            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(5));
+            comprobarSimboloGanador(0);
+            return true;
+        } else if (arrBmCeldas.get(3) == arrBmCeldas.get(4) && arrBmCeldas.get(4) == arrBmCeldas.get(5) && arrBmCeldas.get(3) != null) {
+            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(6));
+            comprobarSimboloGanador(3);
+            return true;
+        } else if (arrBmCeldas.get(6) == arrBmCeldas.get(7) && arrBmCeldas.get(7) == arrBmCeldas.get(8) && arrBmCeldas.get(6) != null) {
+            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(7));
+            comprobarSimboloGanador(6);
+            return true;
+        } else if (arrBmCeldas.get(0) == arrBmCeldas.get(4) && arrBmCeldas.get(4) == arrBmCeldas.get(8) && arrBmCeldas.get(0) != null) {
+            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(1));
+            comprobarSimboloGanador(0);
+            return true;
+        } else if (arrBmCeldas.get(2) == arrBmCeldas.get(4) && arrBmCeldas.get(4) == arrBmCeldas.get(6) && arrBmCeldas.get(2) != null) {
+            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(0));
+            comprobarSimboloGanador(2);
+            return true;
+        }
+        return false;
+    }
+
+    //si se produce un empate es porque se han realizado todas las tiradas posibles (9) y no hay ganador
     private void comprobarEmpate() {
         int contador = 0;
         for (int i = 0; i < arrBmCeldas.size(); i++) {
-            if(arrBmCeldas.get(i) != null) {
+            if (arrBmCeldas.get(i) != null) {
                 contador++;
             }
-            if(contador==9) {
+            if (contador == 9) {
                 FragmentJuegoTresEnRaya.rlGanador.setVisibility(View.VISIBLE);
-                FragmentJuegoTresEnRaya.rlGanador.setAnimation(animationJugada);
+                FragmentJuegoTresEnRaya.rlGanador.setAnimation(obtenerAnimacionJugada());
                 FragmentJuegoTresEnRaya.ivSimboloGanador.setImageBitmap(empate);
                 FragmentJuegoTresEnRaya.tvGanador.setText("¡Empate!");
             }
         }
     }
 
-    /*
-    Método gana()
-    Este método se llama en caso de que la partida haya finalizado con un ganador,
-    para que la línea que señala la partida ganadora
-    se inserte con la animación concreta para que visualmente se vea mejor.
-     */
     private void gana() {
-       FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.startAnimation(animationJugada);
-       FragmentJuegoTresEnRaya.rlGanador.setAnimation(animationGanador);
-       FragmentJuegoTresEnRaya.rlGanador.setVisibility(View.VISIBLE);
-       FragmentJuegoTresEnRaya.rlGanador.startAnimation(animationGanador);
-       if (simboloGanador.equals("O")) {
-           FragmentJuegoTresEnRaya.ivSimboloGanador.setImageBitmap(bmO);
-           TresEnRaya.puntuacionO++;
-           FragmentJuegoTresEnRaya.tvPuntuacionO.setText("O: " + TresEnRaya.puntuacionO);
-       }else {
-           FragmentJuegoTresEnRaya.ivSimboloGanador.setImageBitmap(bmX);
-           TresEnRaya.puntuacionX++;
-           FragmentJuegoTresEnRaya.tvPuntuacionX.setText("X: " + TresEnRaya.puntuacionX);
-       }
-       FragmentJuegoTresEnRaya.tvGanador.setText("¡Ganaste :)");
+        FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.startAnimation(obtenerAnimacionJugada());
+        FragmentJuegoTresEnRaya.rlGanador.setAnimation(obtenerAnimacionGanador());
+        FragmentJuegoTresEnRaya.rlGanador.setVisibility(View.VISIBLE);
+        FragmentJuegoTresEnRaya.rlGanador.startAnimation(obtenerAnimacionGanador());
+        if (simboloGanador.equals("O")) {
+            FragmentJuegoTresEnRaya.ivSimboloGanador.setImageBitmap(bmO);
+            TresEnRaya.puntuacionO++;
+            FragmentJuegoTresEnRaya.tvPuntuacionO.setText("O: " + TresEnRaya.puntuacionO);
+        } else {
+            FragmentJuegoTresEnRaya.ivSimboloGanador.setImageBitmap(bmX);
+            TresEnRaya.puntuacionX++;
+            FragmentJuegoTresEnRaya.tvPuntuacionX.setText("X: " + TresEnRaya.puntuacionX);
+        }
+        FragmentJuegoTresEnRaya.tvGanador.setText("¡Ganaste :)");
+    }
+
+    private void comprobarSimboloGanador(int i) { //le pasamos la primera celda de la jugada ganadora para saber qué imagen tiene si O o X
+        if (arrBmCeldas.get(i) == bmO) { //si la imagen que hay en la celda es igual a la imagen que representa el jugador O
+            simboloGanador = "O";
+        } else {
+            simboloGanador = "X";
+        }
+    }
+
+
+    public Animation obtenerAnimacionJugada() {
+        return animationJugada;
+    }
+
+
+    public Animation obtenerAnimacionXyO() {
+        return animationXyO;
+    }
+
+    public Animation obtenerAnimacionGanador() {
+        return animationGanador;
     }
 
     /*
@@ -205,63 +284,6 @@ public class AdaptadorTableroTresEnRaya extends RecyclerView.Adapter<AdaptadorTa
         ---------
         6 | 7 | 8
      */
-
-    /*
-     Método comprobarGanador()
-
-     Este método comprobarGanador() se encarga de verificar si hay un ganador en el juego de Tres en Raya,
-     revisa todas las posibles combinaciones de celdas que podrían indicar una victoria para X o O.
-     Por ejemplo, la primera condición verifica la primera columna para ver si las celdas la imagen insertada es igual,
-     y no son nulas. De ser así, establece una imagen en ivJugadaTresEnRaya usando arrJugadas.get(2), que es la línea que
-     cruza de arriba a abajo el tablero indicando la victoria del jugador X u O. Así con todas la posibles combinaciones
-     ganadoras de jugadas, que en total son 8. Si hubiera una partida ganadora, comprobarGanador() devolvería true,
-     como se existe ganador en la partida y por tanto se termina dicha partida, determina el fin del juego si es true.
-     De no ser así, devolvería false, indicando que la partida está por terminar o no hubo ganador.
-     */
-    private boolean comprobarGanador() {
-        if (arrBmCeldas.get(0) == arrBmCeldas.get(3) && arrBmCeldas.get(3) == arrBmCeldas.get(6) && arrBmCeldas.get(0) != null) {
-            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(2));
-            comprobarSimboloGanador(0);
-            return true;
-        }else if(arrBmCeldas.get(1) == arrBmCeldas.get(4) && arrBmCeldas.get(4) == arrBmCeldas.get(7) && arrBmCeldas.get(1) != null) {
-            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(3));
-            comprobarSimboloGanador(1);
-            return true;
-        }else if(arrBmCeldas.get(2) == arrBmCeldas.get(5) && arrBmCeldas.get(5) == arrBmCeldas.get(8) && arrBmCeldas.get(2) != null) {
-            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(4));
-            comprobarSimboloGanador(2);
-            return true;
-        }else if(arrBmCeldas.get(0) == arrBmCeldas.get(1) && arrBmCeldas.get(1) == arrBmCeldas.get(2) && arrBmCeldas.get(0) != null) {
-            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(5));
-            comprobarSimboloGanador(0);
-            return true;
-        }else if(arrBmCeldas.get(3) == arrBmCeldas.get(4) && arrBmCeldas.get(4) == arrBmCeldas.get(5) && arrBmCeldas.get(3) != null) {
-            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(6));
-            comprobarSimboloGanador(3);
-            return true;
-        }else if(arrBmCeldas.get(6) == arrBmCeldas.get(7) && arrBmCeldas.get(7) == arrBmCeldas.get(8) && arrBmCeldas.get(6) != null) {
-            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(7));
-            comprobarSimboloGanador(6);
-            return true;
-        }else if(arrBmCeldas.get(0) == arrBmCeldas.get(4) && arrBmCeldas.get(4) == arrBmCeldas.get(8) && arrBmCeldas.get(0) != null) {
-            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(1));
-            comprobarSimboloGanador(0);
-            return true;
-        }else if(arrBmCeldas.get(2) == arrBmCeldas.get(4) && arrBmCeldas.get(4) == arrBmCeldas.get(6) && arrBmCeldas.get(2) != null) {
-            FragmentJuegoTresEnRaya.ivJugadaTresEnRaya.setImageBitmap(arrJugadas.get(0));
-            comprobarSimboloGanador(2);
-            return true;
-        }
-        return false;
-    }
-
-    private void comprobarSimboloGanador(int i) { //le pasamos la primera celda de la jugada ganadora para saber qué imagen tiene si O o X
-        if (arrBmCeldas.get(i) == bmO) { //si la imagen que hay en la celda es igual a la imagen que representa el jugador O
-            simboloGanador = "O";
-        }else {
-            simboloGanador = "X";
-        }
-    }
 
     @Override
     public int getItemCount() {
@@ -278,18 +300,20 @@ public class AdaptadorTableroTresEnRaya extends RecyclerView.Adapter<AdaptadorTa
 
     */
     class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView ivCeldaTablero; //en el xml de celda tenemos esta imagen, que es donde se insertará el diseño de la cuadrícula que tenemos hecho en drawable, que es un cuadrado en blanco, que se insertará en la imagen, y ésta adquirirá esta forma, es decir, celda.xml será cada uno de los mini cuadrados de la cuadrícula de 3x3
+        private ImageView ivCeldaTablero; //en el xml de celda tenemos esta imagen, que es donde se insertará el diseño del cuadrado en blanco que tenemos hecho en drawable, que es un cuadrado en blanco, que se insertará en la imagen, y ésta adquirirá esta forma, es decir, celda.xml será cada uno de los mini cuadrados de la cuadrícula de 3x3
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivCeldaTablero = itemView.findViewById(R.id.ivCeldaTablero);
         }
     }
 
-    public List<Bitmap> getArrBmCeldas() {
-        return arrBmCeldas;
-    }
-
     public void setArrBmCeldas(List<Bitmap> arrBmCeldas) {
         this.arrBmCeldas = arrBmCeldas;
     }
+
+    public void setNumJugadores(int numJugadores) {
+        this.numJugadores = numJugadores;
+    }
+
+
 }
