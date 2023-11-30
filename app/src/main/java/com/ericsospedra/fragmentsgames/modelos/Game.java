@@ -21,7 +21,9 @@ public abstract class Game {
         this.nombre = nombre;
         this.icono = icono;
     }
+    public Game(){
 
+    }
     /**
      * @return String
      */
