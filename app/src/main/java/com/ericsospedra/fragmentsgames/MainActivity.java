@@ -13,6 +13,7 @@ import com.ericsospedra.fragmentsgames.Interfaces.IonClickListenner;
 import com.ericsospedra.fragmentsgames.modelos.Game;
 import com.ericsospedra.fragmentsgames.modelos.Menu;
 import com.ericsospedra.fragmentsgames.modelos.ahorcado.Ahorcado;
+import com.ericsospedra.fragmentsgames.modelos.ahorcado.FragmentAhorcado;
 import com.ericsospedra.fragmentsgames.modelos.hundirlaflota.HundirLaFlota;
 import com.ericsospedra.fragmentsgames.modelos.hundirlaflota.fragments.HundirLaFlotaFragment;
 import com.ericsospedra.fragmentsgames.modelos.tresenraya.TresEnRaya;
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
     public void onClick(int position) {
         switch (juegos.get(position).getIcono()) {
             case "ahorcado":
-                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMenu, Menu.class, null).commit();
+                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMenu, FragmentAhorcado.class, null).commit();
                 invalidateOptionsMenu();
                 break;
             case "tresenraya":
