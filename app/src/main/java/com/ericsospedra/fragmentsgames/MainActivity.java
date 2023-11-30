@@ -13,7 +13,6 @@ import com.ericsospedra.fragmentsgames.Interfaces.IonClickListenner;
 import com.ericsospedra.fragmentsgames.modelos.Game;
 import com.ericsospedra.fragmentsgames.modelos.Menu;
 import com.ericsospedra.fragmentsgames.modelos.ahorcado.Ahorcado;
-import com.ericsospedra.fragmentsgames.modelos.ahorcado.FragmentAhorcado;
 import com.ericsospedra.fragmentsgames.modelos.hundirlaflota.HundirLaFlota;
 import com.ericsospedra.fragmentsgames.modelos.hundirlaflota.fragments.HundirLaFlotaFragment;
 import com.ericsospedra.fragmentsgames.modelos.tresenraya.TresEnRaya;
@@ -23,8 +22,11 @@ import com.ericsospedra.fragmentsgames.modelos.tresenraya.fragments.FragmentJueg
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements Menu.IonAttach, IonClickListenner {
+public class MainActivity extends AppCompatActivity implements Menu.IonAttach, IonClickListenner{
     private ArrayList<Game> juegos;
+    private Toolbar toolbar;
+    private int numJugadoresTresEnRaya;
+
 
     /**
      * @author eric
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.tbMenu);
+        toolbar = findViewById(R.id.tbMenu);
         setSupportActionBar(toolbar);
         manager = getSupportFragmentManager();
     }
@@ -113,11 +115,12 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
     public void onClick(int position) {
         switch (juegos.get(position).getIcono()) {
             case "ahorcado":
-                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMenu, FragmentAhorcado.class, null).commit();
+                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMenu, Menu.class, null).commit();
                 invalidateOptionsMenu();
                 break;
             case "tresenraya":
-                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMenu, Menu.class, null).commit();
+                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMenu, FragmentInicioTresEnRaya.class, null).commit();
+                toolbar.setTitle("Tres En Raya");
                 invalidateOptionsMenu();
                 break;
             case "hundirlaflota":
@@ -126,4 +129,5 @@ public class MainActivity extends AppCompatActivity implements Menu.IonAttach, I
                 break;
         }
     }
+
 }
