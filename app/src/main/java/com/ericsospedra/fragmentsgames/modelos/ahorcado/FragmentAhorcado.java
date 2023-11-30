@@ -75,8 +75,8 @@ public class FragmentAhorcado extends Fragment implements IOnFinish{
                             ahorcadoGame.registrarFallo(letra);
                             tvIntentos.setText(String.valueOf(ahorcadoGame.getIntentos()));
                             tvLetrasIntroducidas.setText(ahorcadoGame.getCadenaLetras());
-                            /*String fotoName = "hangman_" + game.getIntentos();
-                            int resID = getResources().getIdentifier(fotoName, "drawable", getPackageName());
+                            String fotoName = "hangman_" + ahorcadoGame.getIntentos();
+                            /*int resID = getResources().getIdentifier(fotoName, "drawable", getPackageName());
                             ivAhorcado.setImageResource(resID);*/
                         }
                     }if(ahorcadoGame.getIntentos() == 0){
