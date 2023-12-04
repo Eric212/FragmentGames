@@ -25,7 +25,6 @@ public class FragmentAhorcado extends Fragment implements IOnFinish{
     private EditText edLetra;
     private TextView tvLetrasIntroducidas;
     private Button bJugar;
-    private TextView tvPalabrita;
 
     @Nullable
     @Override
@@ -42,7 +41,6 @@ public class FragmentAhorcado extends Fragment implements IOnFinish{
         edLetra = view.findViewById(R.id.editTextText);
         tvLetrasIntroducidas = view.findViewById(R.id.tvLetrasIntroducidas);
         bJugar = view.findViewById(R.id.bJugar);
-        tvPalabrita = view.findViewById(R.id.tvPalabrita);
         ahorcadoGame = new Ahorcado(this);
         ahorcadoGame.onStart(view.getContext());
     }
@@ -51,7 +49,6 @@ public class FragmentAhorcado extends Fragment implements IOnFinish{
     public void onFinish() {
         ahorcadoGame.createGame();
         tvPalabra.setText(ahorcadoGame.getPalabraEspacios());
-        tvPalabrita.setText(ahorcadoGame.getPalabraSecreta());
         bJugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
