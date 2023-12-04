@@ -5,41 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="173dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="180dp"
-        android:text="A H O R C A D O "
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/ivAhorcado"
-        android:layout_width="226dp"
-        android:layout_height="217dp"
-        android:layout_marginStart="89dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="273dp"
+        android:layout_height="252dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="115dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/hangman_6" />
 
     <TextView
         android:id="@+id/tvTextoIntentos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="28dp"
         android:text="Intentos restantes: "
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivAhorcado" />
 
@@ -50,7 +36,7 @@
         android:layout_marginStart="19dp"
         android:layout_marginTop="28dp"
         android:text="6"
-        android:textSize="24sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/tvTextoIntentos"
         app:layout_constraintTop_toBottomOf="@+id/ivAhorcado" />
 
@@ -58,8 +44,8 @@
         android:id="@+id/tvPalabraSecreta"
         android:layout_width="339dp"
         android:layout_height="48dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="34sp"
@@ -77,41 +63,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPalabraSecreta" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="24dp"
-        android:text="Introduzca una letra: "
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
     <EditText
         android:id="@+id/editTextText"
-        android:layout_width="226dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="174dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="Introduzca una letra"
         android:inputType="text"
         android:text=""
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLetrasIntroducidas" />
 
     <Button
         android:id="@+id/bJugar"
         android:layout_width="121dp"
         android:layout_height="65dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="40dp"
         android:text="Jugar"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/editTextText"
-        app:layout_constraintTop_toBottomOf="@+id/tvPalabraSecreta" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLetrasIntroducidas" />
 
     <TextView
         android:id="@+id/tvLetrasIntroducidas"
@@ -123,13 +101,4 @@
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/tvPalabraSecreta" />
 
-    <TextView
-        android:id="@+id/tvPalabrita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="21dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/tvLetrasIntroducidas" />
 </androidx.constraintlayout.widget.ConstraintLayout>
