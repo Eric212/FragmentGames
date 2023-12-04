@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,7 +19,7 @@ import java.util.Random;
  * El constructor siempre necesitara de dos parametros
  * ya que extiende de Game
  */
-//TODO: Implementar
+//
 public class Ahorcado extends Game {
     /**
      * @param nombre
@@ -26,7 +27,6 @@ public class Ahorcado extends Game {
      */
     public Ahorcado(String nombre, String icono) {
         super(nombre,icono);
-
     }
 
     Random random = new Random();
@@ -40,10 +40,6 @@ public class Ahorcado extends Game {
     private boolean gameOver = false;
     private boolean letraEncontrada;
     private boolean hasGanado = false;
-
-    public Random getRandom() {
-        return random;
-    }
 
     public String getPalabraSecreta() {
         return palabraSecreta;
@@ -60,7 +56,6 @@ public class Ahorcado extends Game {
     public Ahorcado(IOnFinish listener){
         this.listener = listener;
     }
-
 
     public void onStart(Context context){
         leerArchivo(context);
@@ -98,19 +93,33 @@ public class Ahorcado extends Game {
         return newPalabra;
     }
 
-    public String comprobarLetra(String letra){
-        char letrap  = letra.charAt(0);
+    public boolean esLetraValida(String letra) {
+        return letra.length() == 1 && Character.isLetter(letra.charAt(0));
+    }
+
+    public String comprobarLetra(String letra) {
+        char letraP = normalizarCadena(letra).charAt(0);
         letraEncontrada = false;
-        for(int i = 0; i< palabraSecreta.length(); i++){
-            if(palabraSecreta.charAt(i) == letrap){
+
+        for (int i = 0; i < palabraSecreta.length(); i++) {
+            char letraActual = normalizarCadena(String.valueOf(palabraSecreta.charAt(i))).charAt(0);
+
+            if (letraActual == letraP) {
                 StringBuilder newPalabraGuiones = new StringBuilder(palabraGuiones);
-                newPalabraGuiones.setCharAt(i, letrap);
+                newPalabraGuiones.setCharAt(i, palabraSecreta.charAt(i));
                 palabraGuiones = newPalabraGuiones.toString();
                 letraEncontrada = true;
             }
         }
+
         comprobarAcierto(palabraGuiones);
         return palabraGuiones;
+    }
+
+    private String normalizarCadena(String cadena) {
+        return Normalizer.normalize(cadena, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "")
+                .toLowerCase();
     }
 
     public void comprobarAcierto(String palabraGuiones){
@@ -139,7 +148,6 @@ public class Ahorcado extends Game {
         return letraEncontrada;
     }
 
-
     public boolean getGameOver() {
         return gameOver;
     }
@@ -151,7 +159,6 @@ public class Ahorcado extends Game {
     public StringBuilder getCadenaLetras() {
         return cadenaLetras;
     }
-
 
     public void leerArchivo(Context context) {
         Thread t = new Thread(new Runnable() {
@@ -174,6 +181,5 @@ public class Ahorcado extends Game {
         });
         t.start();
     }
-
 }
 
